@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Internship Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <h1>AI Internship Application Tracker</h1>
+
+    <form method="POST">
+        <input type="text" name="company" placeholder="Company Name" required>
+
+        <input type="text" name="position" placeholder="Position" required>
+
+        <input type="text" name="recruiter" placeholder="Recruiter">
+
+        <select name="status">
+            <option>Applied</option>
+            <option>Interview</option>
+            <option>Rejected</option>
+            <option>Offer</option>
+        </select>
+
+        <button type="submit">Add Application</button>
+    </form>
+
+    <h2>Applications</h2>
+
+    <table>
+        <tr>
+            <th>Company</th>
+            <th>Position</th>
+            <th>Recruiter</th>
+            <th>Status</th>
+        </tr>
+
+        {% for app in applications %}
+        <tr>
+            <td>{{ app[0] }}</td>
+            <td>{{ app[1] }}</td>
+            <td>{{ app[2] }}</td>
+            <td>{{ app[3] }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</body>
+</html>
