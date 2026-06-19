@@ -35,3 +35,22 @@ th, td {
 th {
     background-color: #f2f2f2;
 }
+.applied {
+    color: blue;
+    font-weight: bold;
+}
+
+.interview {
+    color: orange;
+    font-weight: bold;
+}
+
+.offer {
+    color: green;
+    font-weight: bold;
+}
+
+.rejected {
+    color: red;
+    font-weight: bold;
+}

@@ -33,14 +33,22 @@
             <th>Position</th>
             <th>Recruiter</th>
             <th>Status</th>
+            <th>Delete</th>
         </tr>
 
         {% for app in applications %}
         <tr>
-            <td>{{ app[0] }}</td>
             <td>{{ app[1] }}</td>
             <td>{{ app[2] }}</td>
             <td>{{ app[3] }}</td>
+            <td class="{{ app[4].lower() }}">
+                {{ app[4] }}
+            </td>
+            <td>
+                <a href="/delete/{{ app[0] }}">
+                    <button>Delete</button>
+                </a>
+            </td>
         </tr>
         {% endfor %}
 

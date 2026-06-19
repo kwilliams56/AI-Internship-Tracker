@@ -39,11 +39,21 @@ def home():
 
     conn = sqlite3.connect("applications.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT company, position, recruiter, status FROM applications")
+    cursor.execute("SELECT id, company, position, recruiter, status FROM applications")
     applications = cursor.fetchall()
     conn.close()
 
     return render_template("index.html", applications=applications)
+
+@app.route("/delete/<int:id>")
+def delete(id):
+    conn = sqlite3.connect("applications.db")
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM applications WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
+
+    return redirect("/")
 
 if __name__ == "__main__":
     init_db()
