@@ -41,9 +41,58 @@ def home():
     cursor = conn.cursor()
     cursor.execute("SELECT id, company, position, recruiter, status FROM applications")
     applications = cursor.fetchall()
+    cursor.execute("SELECT COUNT(*) FROM applications")
+    total = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM applications WHERE status='Applied'")
+    applied = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM applications WHERE status='Interview'")
+    interview = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM applications WHERE status='Offer'")
+    offer = cursor.fetchone()[0]
+
+    cursor.execute("SELECT COUNT(*) FROM applications WHERE status='Rejected'")
+    rejected = cursor.fetchone()[0]
     conn.close()
 
-    return render_template("index.html", applications=applications)
+    return render_template(
+    "index.html",
+    applications=applications,
+    total=total,
+    applied=applied,
+    interview=interview,
+    offer=offer,
+    rejected=rejected
+)
+
+@app.route("/edit/<int:id>", methods=["GET", "POST"])
+def edit(id):
+    conn = sqlite3.connect("applications.db")
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+        company = request.form["company"]
+        position = request.form["position"]
+        recruiter = request.form["recruiter"]
+        status = request.form["status"]
+
+        cursor.execute("""
+            UPDATE applications
+            SET company = ?, position = ?, recruiter = ?, status = ?
+            WHERE id = ?
+        """, (company, position, recruiter, status, id))
+
+        conn.commit()
+        conn.close()
+        return redirect("/")
+
+    cursor.execute("SELECT id, company, position, recruiter, status FROM applications WHERE id = ?", (id,))
+    application = cursor.fetchone()
+    conn.close()
+
+    return render_template("edit.html", application=application)
 
 @app.route("/delete/<int:id>")
 def delete(id):

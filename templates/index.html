@@ -7,7 +7,14 @@
 <body>
 
     <h1>AI Internship Application Tracker</h1>
-
+    <div class="dashboard">
+    <div>Total: {{ total }}</div>
+    <div>Applied: {{ applied }}</div>
+    <div>Interviews: {{ interview }}</div>
+    <div>Offers: {{ offer }}</div>
+    <div>Rejected: {{ rejected }}</div>
+    </div>
+    
     <form method="POST">
         <input type="text" name="company" placeholder="Company Name" required>
 
@@ -34,6 +41,7 @@
             <th>Recruiter</th>
             <th>Status</th>
             <th>Delete</th>
+            <th>Edit</th>
         </tr>
 
         {% for app in applications %}
@@ -47,6 +55,11 @@
             <td>
                 <a href="/delete/{{ app[0] }}">
                     <button>Delete</button>
+                </a>
+            </td>
+            <td>
+                <a href="/edit/{{ app[0] }}">
+                    <button>Edit</button>
                 </a>
             </td>
         </tr>

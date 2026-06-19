@@ -54,3 +54,18 @@ th {
     color: red;
     font-weight: bold;
 }
+.dashboard {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.dashboard div {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    background-color: #f8f8f8;
+}
