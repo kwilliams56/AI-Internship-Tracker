@@ -5,13 +5,15 @@ A web application built with Flask, Python, SQLite, HTML, and CSS to help studen
 ## Features
 
 - Add internship applications
-- Track company names
-- Track job positions
-- Track recruiter contacts
+- Edit application details
+- Delete applications
+- Search by company name
+- Track application dates
 - Monitor application status
-- Store data using SQLite
-- Simple and responsive interface
-
+- Dashboard statistics
+- SQLite database integration
+- Flask web application
+- 
 ## Technologies Used
 
 - Python
