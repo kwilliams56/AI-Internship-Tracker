@@ -24,7 +24,7 @@ A web application built with Flask, Python, SQLite, HTML, and CSS to help studen
 
 ## Screenshots
 
-![AI Internship Tracker](screenshot.png)
+![AI Internship Tracker](Screenshot.png)
 
 ## Installation
 
