@@ -14,13 +14,15 @@
     <div>Offers: {{ offer }}</div>
     <div>Rejected: {{ rejected }}</div>
     </div>
-    
+
     <form method="POST">
         <input type="text" name="company" placeholder="Company Name" required>
 
         <input type="text" name="position" placeholder="Position" required>
 
         <input type="text" name="recruiter" placeholder="Recruiter">
+
+        <input type="date" name="date_applied" required>
 
         <select name="status">
             <option>Applied</option>
@@ -31,6 +33,10 @@
 
         <button type="submit">Add Application</button>
     </form>
+    <form method="GET">
+    <input type="text" name="search" placeholder="Search company">
+    <button type="submit">Search</button>
+    </form>
 
     <h2>Applications</h2>
 
@@ -39,6 +45,7 @@
             <th>Company</th>
             <th>Position</th>
             <th>Recruiter</th>
+            <th>Date Applied</th>
             <th>Status</th>
             <th>Delete</th>
             <th>Edit</th>
@@ -49,9 +56,11 @@
             <td>{{ app[1] }}</td>
             <td>{{ app[2] }}</td>
             <td>{{ app[3] }}</td>
+            <td>{{ app[5] }}</td>
             <td class="{{ app[4].lower() }}">
                 {{ app[4] }}
             </td>
+        
             <td>
                 <a href="/delete/{{ app[0] }}">
                     <button>Delete</button>

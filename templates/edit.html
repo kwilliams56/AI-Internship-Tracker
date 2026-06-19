@@ -12,6 +12,7 @@
     <input type="text" name="company" value="{{ application[1] }}" required>
     <input type="text" name="position" value="{{ application[2] }}" required>
     <input type="text" name="recruiter" value="{{ application[3] }}">
+    <input type="date" name="date_applied" value="{{ application[5] }}" required
 
     <select name="status">
         <option {% if application[4] == "Applied" %}selected{% endif %}>Applied</option>

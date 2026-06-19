@@ -12,7 +12,8 @@ def init_db():
             company TEXT NOT NULL,
             position TEXT NOT NULL,
             recruiter TEXT,
-            status TEXT NOT NULL
+            status TEXT NOT NULL,
+            date_applied TEXT
         )
     """)
     conn.commit()
@@ -24,14 +25,15 @@ def home():
         company = request.form["company"]
         position = request.form["position"]
         recruiter = request.form["recruiter"]
+        date_applied = request.form["date_applied"]
         status = request.form["status"]
 
         conn = sqlite3.connect("applications.db")
         cursor = conn.cursor()
         cursor.execute("""
-            INSERT INTO applications (company, position, recruiter, status)
-            VALUES (?, ?, ?, ?)
-        """, (company, position, recruiter, status))
+            INSERT INTO applications (company, position, recruiter, status, date_applied)
+            VALUES (?, ?, ?, ?, ?)
+        """, (company, position, recruiter, status, date_applied))
         conn.commit()
         conn.close()
 
@@ -39,8 +41,23 @@ def home():
 
     conn = sqlite3.connect("applications.db")
     cursor = conn.cursor()
-    cursor.execute("SELECT id, company, position, recruiter, status FROM applications")
+
+    search = request.args.get("search")
+
+    if search:
+        cursor.execute("""
+            SELECT id, company, position, recruiter, status, date_applied
+            FROM applications
+            WHERE company LIKE ?
+        """, ("%" + search + "%",))
+    else:
+        cursor.execute("""
+            SELECT id, company, position, recruiter, status, date_applied
+            FROM applications
+        """)
+
     applications = cursor.fetchall()
+
     cursor.execute("SELECT COUNT(*) FROM applications")
     total = cursor.fetchone()[0]
 
@@ -55,17 +72,18 @@ def home():
 
     cursor.execute("SELECT COUNT(*) FROM applications WHERE status='Rejected'")
     rejected = cursor.fetchone()[0]
+
     conn.close()
 
     return render_template(
-    "index.html",
-    applications=applications,
-    total=total,
-    applied=applied,
-    interview=interview,
-    offer=offer,
-    rejected=rejected
-)
+        "index.html",
+        applications=applications,
+        total=total,
+        applied=applied,
+        interview=interview,
+        offer=offer,
+        rejected=rejected
+    )
 
 @app.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit(id):
@@ -76,19 +94,25 @@ def edit(id):
         company = request.form["company"]
         position = request.form["position"]
         recruiter = request.form["recruiter"]
+        date_applied = request.form["date_applied"]
         status = request.form["status"]
 
         cursor.execute("""
             UPDATE applications
-            SET company = ?, position = ?, recruiter = ?, status = ?
+            SET company = ?, position = ?, recruiter = ?, status = ?, date_applied = ?
             WHERE id = ?
-        """, (company, position, recruiter, status, id))
+        """, (company, position, recruiter, status, date_applied, id))
 
         conn.commit()
         conn.close()
         return redirect("/")
 
-    cursor.execute("SELECT id, company, position, recruiter, status FROM applications WHERE id = ?", (id,))
+    cursor.execute("""
+        SELECT id, company, position, recruiter, status, date_applied
+        FROM applications
+        WHERE id = ?
+    """, (id,))
+
     application = cursor.fetchone()
     conn.close()
 
