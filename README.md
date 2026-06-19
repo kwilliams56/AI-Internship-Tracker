@@ -2,6 +2,10 @@
 
 A web application built with Flask, Python, SQLite, HTML, and CSS to help students track internship applications, recruiters, and application statuses.
 
+## Live Demo
+
+https://ai-internship-tracker.onrender.com
+
 ## Features
 
 - Add internship applications
